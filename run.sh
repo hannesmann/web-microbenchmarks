@@ -9,7 +9,7 @@ case $benchtype in
 		mkdir -p bin
 		go build -o bin ./go/http/client 
 
-		read -p "Select HTTP server (go-http go-fasthttp rust-actix rust-hyper rust-tinyhttp): " httpserver
+		read -p "Select HTTP server (go-nethttp go-fasthttp rust-actix rust-hyper rust-tinyhttp): " httpserver
 		;;
 
 	"grpc")

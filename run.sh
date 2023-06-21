@@ -4,8 +4,7 @@ read -p "Select 'http' or 'grpc': " benchtype
 
 case $benchtype in 
 	"http")
-		read -p "Select HTTP client (go-http go-fasthttp rust-hyper): " httpclient
-		read -p "Select HTTP server (go-http go-fasthttp rust-actix rust-hyper rust-tinyhttp rust-warp): " httpserver
+		read -p "Select HTTP server (go-http go-fasthttp rust-actix rust-hyper rust-tinyhttp): " httpserver
 		;;
 
 	"grpc")

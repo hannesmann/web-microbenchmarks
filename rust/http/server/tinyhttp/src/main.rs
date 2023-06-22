@@ -15,6 +15,10 @@ fn main() {
 
 	// Single threaded
 	for request in server.incoming_requests() {
+		if request.url() != "/" {
+			panic!("Invalid path {}", request.url())
+		}
+		
 		let response = Response::from_string("r");
 		let _ = request.respond(response);
 	}

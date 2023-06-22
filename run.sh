@@ -7,6 +7,12 @@ read -p "Select 'http' or 'grpc': " benchtype
 
 function starthttp {
 	case $1 in 
+		"go-fasthttp")
+			(cd go/http/server/fasthttp && go build -o go-fasthttp-server)
+			mv go/http/server/fasthttp/go-fasthttp-server bin/
+			./bin/go-http-client ./bin/go-fasthttp-server
+			;;
+
 		"go-nethttp")
 			(cd go/http/server/nethttp && go build -o go-nethttp-server)
 			mv go/http/server/nethttp/go-nethttp-server bin/

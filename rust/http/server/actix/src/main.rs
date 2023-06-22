@@ -1,3 +1,20 @@
-fn main() {
-    println!("Hello, world!");
+use actix_web::{get, web, App, HttpServer, Responder};
+
+#[get("/")]
+async fn index() -> impl Responder { "r" }
+
+const HTTP_ADDRESS: &str = "127.0.0.1";
+const HTTP_PORT: u16 = 9000;
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+	println!("Rust Actix Web server started");
+
+	let _ = HttpServer::new(|| App::new().service(index))
+		.bind((HTTP_ADDRESS, HTTP_PORT))?
+		.run()
+		.await?;
+
+	println!("Rust Actix Web server stopped");
+	Ok(())
 }

@@ -13,7 +13,7 @@ async fn shutdown_signal() {
 }
 
 async fn respond(_req: Request<Body>) -> Result<Response<Body>, Infallible> {
-	Ok(Response::new("R".into()))
+	Ok(Response::new("r".into()))
 }
 
 #[tokio::main]

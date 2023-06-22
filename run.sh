@@ -13,6 +13,12 @@ function starthttp {
 			./bin/go-http-client ./bin/go-nethttp-server
 			;;
 
+		"rust-actix")
+			(cd rust/http/server/actix && cargo build --release)
+			mv rust/http/server/actix/target/release/rust-actix-server bin/
+			./bin/go-http-client ./bin/rust-actix-server
+			;;
+
 		"rust-hyper")
 			(cd rust/http/server/hyper && cargo build --release)
 			mv rust/http/server/hyper/target/release/rust-hyper-server bin/

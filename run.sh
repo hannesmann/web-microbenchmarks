@@ -14,8 +14,9 @@ function starthttp {
 			;;
 
 		"rust-hyper")
-			export CARGO_TARGET_DIR="$(pwd)/bin"
 			(cd rust/http/server/hyper && cargo build --release)
+			mv rust/http/server/hyper/target/release/rust-hyper-server bin/
+			./bin/go-http-client ./bin/rust-hyper-server
 			;;
 
 		*)

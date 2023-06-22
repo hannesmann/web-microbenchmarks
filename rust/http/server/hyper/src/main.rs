@@ -8,7 +8,7 @@ const HTTP_ADDRESS: [u8; 4] = [127, 0, 0, 1];
 const HTTP_PORT: u16 = 9000;
 
 async fn shutdown_signal() {
-	tokio::signal::ctrl_c().await;
+	let _ = tokio::signal::ctrl_c().await;
 	println!("Rust Hyper server stopped");
 }
 
@@ -29,5 +29,5 @@ async fn main() {
 	let server = Server::bind(&addr).serve(make_svc);
 	let graceful_server = server.with_graceful_shutdown(shutdown_signal());
 
-	graceful_server.await;
+	let _ = graceful_server.await;
 }

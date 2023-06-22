@@ -6,11 +6,13 @@ import (
 	"os"
 	"os/exec"
 	"net/http"
+	"syscall"
 	"time"
 )
 
 const httpAddr = "127.0.0.1"
 const httpPort = "9000"
+const requests = 10000
 
 func main() {
 	if len(os.Args) > 1 {
@@ -26,11 +28,11 @@ func main() {
 		// Wait for server to get ready
 		time.Sleep(3 * time.Second)
 
-		// Send 10000 requests sequentially
 		start := time.Now()
 		address := fmt.Sprintf("http://%s:%s", httpAddr, httpPort)
-
-		for i := 0; i < 10000; i++ {
+		
+		// Send 10000 requests sequentially
+		for i := 0; i < requests; i++ {
 			// Send a request
 			resp, err := http.Get(address)
 			if err != nil {
@@ -47,10 +49,11 @@ func main() {
 
 		elapsed := time.Now().Sub(start)
 		seconds := elapsed.Seconds()
-		secondsPerRequest := seconds / 10000.0
+		secondsPerRequest := seconds / float64(requests)
 
 		fmt.Println("Average response time:", secondsPerRequest * 1000.0, "ms")
 
+		syscall.Kill(cmd.Process.Pid, syscall.SIGINT)
 		cmd.Wait()
 	} else {
 		fmt.Println("Expected one argument")

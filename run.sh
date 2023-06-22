@@ -37,6 +37,12 @@ function starthttp {
 			./bin/go-http-client ./bin/rust-tinyhttp-server
 			;;
 
+		"rust-warp")
+			(cd rust/http/server/warp && cargo build --release)
+			mv rust/http/server/warp/target/release/rust-warp-server bin/
+			./bin/go-http-client ./bin/rust-warp-server
+			;;
+
 		*)
 			echo "Unknown server type $1"
 			;;
@@ -51,7 +57,7 @@ case $benchtype in
 		(cd go/http/client && go build -o go-http-client)
 		mv go/http/client/go-http-client bin/
 
-		read -p "Select HTTP server (go-nethttp go-fasthttp rust-actix rust-hyper rust-tinyhttp): " httpserver
+		read -p "Select HTTP server (go-nethttp go-fasthttp rust-actix rust-hyper rust-tinyhttp rust-warp): " httpserver
 		starthttp $httpserver
 		;;
 

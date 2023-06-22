@@ -11,11 +11,16 @@ function starthttp {
 			(cd go/http/server/nethttp && go build -o go-nethttp-server)
 			mv go/http/server/nethttp/go-nethttp-server bin/
 			./bin/go-http-client ./bin/go-nethttp-server
-		;;
+			;;
+
+		"rust-hyper")
+			export CARGO_TARGET_DIR="$(pwd)/bin"
+			(cd rust/http/server/hyper && cargo build --release)
+			;;
 
 		*)
-		echo "Unknown server type $1"
-		;;
+			echo "Unknown server type $1"
+			;;
 	esac
 }
 

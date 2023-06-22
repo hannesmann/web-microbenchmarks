@@ -39,6 +39,8 @@ func main() {
 		fmt.Println("Server binary:", os.Args[1])
 
 		cmd := exec.Command(os.Args[1])
+		cmd.Stdout = os.Stdout
+		
 		err := cmd.Start()
 
 		if err != nil {

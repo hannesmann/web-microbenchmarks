@@ -49,8 +49,13 @@ func main() {
 		address := fmt.Sprintf("http://%s:%s", httpAddr, httpPort)
 
 		err = sendRequest(address)
+
 		// Keep retrying until server is up
-		for errors.Is(err, syscall.ECONNREFUSED) && time.Now().Sub(start).Seconds() < 1 {
+		for errors.Is(err, syscall.ECONNREFUSED) {
+			if time.Now().Sub(start).Seconds() > 1 {
+				panic(err)
+			}
+
 			err = sendRequest(address)
 		}
 

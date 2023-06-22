@@ -25,6 +25,12 @@ function starthttp {
 			./bin/go-http-client ./bin/rust-hyper-server
 			;;
 
+		"rust-tinyhttp")
+			(cd rust/http/server/tinyhttp && cargo build --release)
+			mv rust/http/server/tinyhttp/target/release/rust-tinyhttp-server bin/
+			./bin/go-http-client ./bin/rust-tinyhttp-server
+			;;
+
 		*)
 			echo "Unknown server type $1"
 			;;

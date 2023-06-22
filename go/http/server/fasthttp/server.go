@@ -9,7 +9,7 @@ const httpAddr = "127.0.0.1"
 const httpPort = "9000"
 
 func fastHTTPHandler(ctx *fasthttp.RequestCtx) {
-	if ctx.Path() == "/" {
+	if string(ctx.Path()) == "/" {
 		fmt.Fprintf(ctx, "r")
 	} else {
 		panic(fmt.Errorf("Invalid path %s", ctx.Path()))

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export GODEBUG=http2client=0  # disable HTTP/2 client support
+export GODEBUG=$GODEBUG,http2server=0  # disable HTTP/2 server support
+
 read -p "Select 'http' or 'grpc': " benchtype
 
 function starthttp {

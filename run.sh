@@ -8,6 +8,8 @@ all_http="go-nethttp go-fasthttp rust-actix rust-hyper rust-tinyhttp rust-warp"
 read -p "Select 'http' or 'grpc': " benchtype
 
 function starthttp {
+	export USEHTTPMON=$2
+
 	case $1 in 
 		"all")
 			for i in $all_http; do echo "$i" && echo "" && starthttp $i 2>&1 | grep -E 'First request|Average response' && echo ""; done
@@ -62,8 +64,17 @@ case $benchtype in
 		(cd go/http/client && go mod download && go build -o go-http-client)
 		mv -f go/http/client/go-http-client bin/
 
+		use_httpmon=0
+
+		read -p "Use httpmon? (Y/N): " httpmon
+
+		if [ $httpmon == "y" ] || [ $httpmon == "Y" ]; then
+			use_httpmon=1
+		fi
+
 		read -p "Select HTTP server (all $all_http): " httpserver
-		starthttp $httpserver
+
+		starthttp $httpserver $use_httpmon
 		;;
 
 	"grpc")

@@ -32,3 +32,4 @@ bin/
 
 # Go workspace file
 go.work
+go.work.sum

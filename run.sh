@@ -3,43 +3,48 @@
 export GODEBUG=http2client=0  # disable HTTP/2 client support
 export GODEBUG=$GODEBUG,http2server=0  # disable HTTP/2 server support
 
+all_http="go-nethttp go-fasthttp rust-actix rust-hyper rust-tinyhttp rust-warp"
+
 read -p "Select 'http' or 'grpc': " benchtype
 
 function starthttp {
 	case $1 in 
+		"all")
+			for i in $all_http; do echo "$i" && echo "" && starthttp $i 2>&1 | grep -E 'First request|Average response' && echo ""; done
+			;;
 		"go-fasthttp")
-			(cd go/http/server/fasthttp && go build -o go-fasthttp-server)
-			mv go/http/server/fasthttp/go-fasthttp-server bin/
+			(cd go/http/server/fasthttp && go mod download && go build -o go-fasthttp-server)
+			mv -f go/http/server/fasthttp/go-fasthttp-server bin/
 			./bin/go-http-client ./bin/go-fasthttp-server
 			;;
 
 		"go-nethttp")
-			(cd go/http/server/nethttp && go build -o go-nethttp-server)
-			mv go/http/server/nethttp/go-nethttp-server bin/
+			(cd go/http/server/nethttp && go mod download && go build -o go-nethttp-server)
+			mv -f go/http/server/nethttp/go-nethttp-server bin/
 			./bin/go-http-client ./bin/go-nethttp-server
 			;;
 
 		"rust-actix")
 			(cd rust/http/server/actix && cargo build --release)
-			mv rust/http/server/actix/target/release/rust-actix-server bin/
+			mv -f rust/http/server/actix/target/release/rust-actix-server bin/
 			./bin/go-http-client ./bin/rust-actix-server
 			;;
 
 		"rust-hyper")
 			(cd rust/http/server/hyper && cargo build --release)
-			mv rust/http/server/hyper/target/release/rust-hyper-server bin/
+			mv -f rust/http/server/hyper/target/release/rust-hyper-server bin/
 			./bin/go-http-client ./bin/rust-hyper-server
 			;;
 
 		"rust-tinyhttp")
 			(cd rust/http/server/tinyhttp && cargo build --release)
-			mv rust/http/server/tinyhttp/target/release/rust-tinyhttp-server bin/
+			mv -f rust/http/server/tinyhttp/target/release/rust-tinyhttp-server bin/
 			./bin/go-http-client ./bin/rust-tinyhttp-server
 			;;
 
 		"rust-warp")
 			(cd rust/http/server/warp && cargo build --release)
-			mv rust/http/server/warp/target/release/rust-warp-server bin/
+			mv -f rust/http/server/warp/target/release/rust-warp-server bin/
 			./bin/go-http-client ./bin/rust-warp-server
 			;;
 
@@ -54,10 +59,10 @@ case $benchtype in
 		echo "Compiling client..."
 
 		mkdir -p bin
-		(cd go/http/client && go build -o go-http-client)
-		mv go/http/client/go-http-client bin/
+		(cd go/http/client && go mod download && go build -o go-http-client)
+		mv -f go/http/client/go-http-client bin/
 
-		read -p "Select HTTP server (go-nethttp go-fasthttp rust-actix rust-hyper rust-tinyhttp rust-warp): " httpserver
+		read -p "Select HTTP server (all $all_http): " httpserver
 		starthttp $httpserver
 		;;
 

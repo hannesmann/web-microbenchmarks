@@ -83,6 +83,12 @@ case $benchtype in
 		;;
 
 	"grpc")
+		echo "Compiling client..."
+
+		mkdir -p bin
+		(cd go/grpc/client && go mod download && go build -o go-grpc-client)
+		mv -f go/grpc/client/go-grpc-client bin/
+
 		read -p "Select gRPC server (go-grpc rust-tonic): " grpcserver
 		;;
 

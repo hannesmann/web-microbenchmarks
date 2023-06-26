@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "./go/grpc/client";
+
+service BenchmarkService {
+    rpc Benchmark (Request) returns (Response) {}
+}
+
+message Request {
+    string data = 1;
+}
+
+message Response {
+    string data = 1;
+}

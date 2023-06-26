@@ -58,7 +58,7 @@ func runSimpleBenchmark(address string) {
 
 func runHttpmonBenchmark(address string) {
 	cmd := exec.Command(
-		"httpmon", "--url", address, "--open", "--concurrency", "500", "--thinktime", "1", "--count", "10000", "--interval", "1", "--terminate-after-count")
+		"httpmon", "--url", address, "--open", "--concurrency", "500", "--thinktime", "1", "--count", "10000", "--terminate-after-count")
 	cmd.Stdout = os.Stdout
 
 	err := cmd.Start()

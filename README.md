@@ -23,3 +23,18 @@ The simple benchmark sends 10000 requests sequentially on a single thread. The s
 | Rust     | Hyper     | 5.684 ms                     | 0.2454 ms             |
 | Rust     | tiny-http | 1.722 ms                     | 0.2570 ms             |
 | Rust     | Warp      | 6.357 ms                     | 0.2542 ms             |
+
+### HTTPmon benchmark
+
+The HTTPmon benchmark uses [cloud-control/httpmon](https://github.com/cloud-control/httpmon) to send 10000 requests, with up to 500 concurrently at the same time, to the server.
+
+`httpmon --url $url --open --concurrency 500 --thinktime 1 --count 10000 --terminate-after-count`
+
+| Language | Framework | Average latency | Maximum latency | 95-percentile latency | 99-percentile latency | Late requests |
+| -------- | --------- | --------------- | --------------- | --------------------- | --------------------- | ------------- |
+| Go       | net/http  | 1 ms            | 65 ms           | 1 ms                  | 2 ms                  | 11            |
+| Go       | fasthttp  | 1 ms            | 42 ms           | 1 ms                  | 3 ms                  | 8             |
+| Rust     | Actix Web | 1 ms            | 56 ms           | 1 ms                  | 1 ms                  | 3             |
+| Rust     | Hyper     | 1 ms            | 56 ms           | 1 ms                  | 1 ms                  | 5             |
+| Rust     | tiny-http | 5 ms            | 20077 ms        | 1 ms                  | 6 ms                  | 8             |
+| Rust     | Warp      | 1 ms            | 38 ms           | 1 ms                  | 1 ms                  | 4             |

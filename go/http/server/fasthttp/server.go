@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/valyala/fasthttp"
 )
 
@@ -20,5 +21,9 @@ func main() {
 	fmt.Println("Go fasthttp server started")
 	defer fmt.Println("Go fasthttp server stopped")
 
-	fasthttp.ListenAndServe(fmt.Sprintf("%s:%s", httpAddr, httpPort), fastHTTPHandler)
+	err := fasthttp.ListenAndServe(fmt.Sprintf("%s:%s", httpAddr, httpPort), fastHTTPHandler)
+
+	if err != nil {
+		panic(err)
+	}
 }

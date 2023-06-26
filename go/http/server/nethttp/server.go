@@ -16,5 +16,9 @@ func main() {
 		fmt.Fprint(writer, "r")
 	})
 
-	http.ListenAndServe(fmt.Sprintf("%s:%s", httpAddr, httpPort), nil)
+	err := http.ListenAndServe(fmt.Sprintf("%s:%s", httpAddr, httpPort), nil)
+
+	if err != nil {
+		panic(err)
+	}
 }

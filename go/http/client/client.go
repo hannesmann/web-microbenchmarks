@@ -37,26 +37,13 @@ func sendRequest(addr string) error {
 func runSimpleBenchmark(address string) {
 	start := time.Now()
 
-	err := sendRequest(address)
-
-	// Keep retrying until server is up
-	for errors.Is(err, syscall.ECONNREFUSED) {
-		if time.Now().Sub(start).Seconds() > 1 {
-			panic(err)
-		}
-
-		err = sendRequest(address)
-	}
-
-	fmt.Println("First request (startup time):", time.Now().Sub(start).Seconds()*1000.0, "ms")
-
 	// Send 10000 requests sequentially
-	for i := 1; i < requests; i++ {
+	for i := 0; i < requests; i++ {
 		if (i+1)%1000 == 0 {
 			fmt.Printf("Request: %d/%d\n", i+1, requests)
 		}
 
-		err = sendRequest(address)
+		err := sendRequest(address)
 		if err != nil {
 			panic(err)
 		}
@@ -70,7 +57,17 @@ func runSimpleBenchmark(address string) {
 }
 
 func runHttpmonBenchmark(address string) {
+	cmd := exec.Command(
+		"httpmon", "--url", address, "--open", "--concurrency", "500", "--thinktime", "1", "--count", "10000", "--interval", "1", "--terminate-after-count")
+	cmd.Stdout = os.Stdout
 
+	err := cmd.Start()
+
+	if err != nil {
+		panic(err)
+	}
+
+	cmd.Wait()
 }
 
 func main() {
@@ -88,6 +85,20 @@ func main() {
 
 		useHttpmon := os.Getenv("USEHTTPMON") == "1"
 		address := fmt.Sprintf("http://%s:%s", httpAddr, httpPort)
+
+		err = sendRequest(address)
+		start := time.Now()
+
+		// Keep retrying until server is up
+		for errors.Is(err, syscall.ECONNREFUSED) {
+			if time.Now().Sub(start).Seconds() > 1 {
+				panic(err)
+			}
+
+			err = sendRequest(address)
+		}
+
+		fmt.Println("First request (startup time):", time.Now().Sub(start).Seconds()*1000.0, "ms")
 
 		if useHttpmon {
 			runHttpmonBenchmark(address)

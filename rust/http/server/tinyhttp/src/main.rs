@@ -11,7 +11,7 @@ fn main() {
 		std::process::exit(0);
 	});
 
-	let server = Server::http(HTTP_HOST).unwrap();
+	let server = Server::http(HTTP_HOST).expect("Failed to start tiny-http server");
 
 	// Single threaded
 	for request in server.incoming_requests() {

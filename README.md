@@ -35,6 +35,7 @@ The HTTPmon benchmark uses [cloud-control/httpmon](https://github.com/cloud-cont
 | -------- | --------- | --------------- | --------------- | --------------------- | --------------------- | ------------- |
 | Go       | net/http  | 1 ms            | 65 ms           | 1 ms                  | 2 ms                  | 11            |
 | Go       | fasthttp  | 1 ms            | 42 ms           | 1 ms                  | 3 ms                  | 8             |
+| Python   | Gunicorn  | 2 ms            | 41 ms           | 2 ms                  | 3 ms                  | 19            |
 | Rust     | Actix Web | 1 ms            | 56 ms           | 1 ms                  | 1 ms                  | 3             |
 | Rust     | Hyper     | 1 ms            | 56 ms           | 1 ms                  | 1 ms                  | 5             |
 | Rust     | tiny-http | 5 ms            | 20077 ms        | 1 ms                  | 6 ms                  | 8             |

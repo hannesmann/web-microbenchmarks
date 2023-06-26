@@ -12,7 +12,7 @@ function starthttp {
 
 	case $1 in 
 		"all")
-			for i in $all_http; do echo "$i" && echo "" && starthttp $i 2>&1 | grep -E 'First request|Average response' && echo ""; done
+			for i in $all_http; do echo "$i" && echo "" && starthttp $i $2 2>&1 | grep -E 'First request|Average response' && echo ""; done
 			;;
 		"go-fasthttp")
 			(cd go/http/server/fasthttp && go mod download && go build -o go-fasthttp-server)

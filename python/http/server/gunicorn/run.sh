@@ -1,12 +1,14 @@
 #!/bin/bash
 function ctrl_c {
+	echo "Trapped SIGINT"
 	kill -INT $gunicornpid
+	result=$(wait $gunicornpid)
 	echo "Python gunicorn server stopped"
-	exit 0
+	exit $result
 }
 
 echo "Python gunicorn server started"
-gunicorn -b 127.0.0.1:9000 app:app &
+gunicorn -w 4 -b 127.0.0.1:9000 app:app &
 gunicornpid=$!
 trap "ctrl_c" INT
 sleep infinity 

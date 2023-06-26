@@ -19,6 +19,7 @@ The simple benchmark sends 10000 requests sequentially on a single thread. The s
 | -------- | --------- | ---------------------------- | --------------------- |
 | Go       | net/http  | 4.984 ms                     | 0.3022 ms             |
 | Go       | fasthttp  | 5.505 ms                     | 0.2496 ms             |
+| Python   | Gunicorn  | 485.8 ms                     | 1.401 ms              |
 | Rust     | Actix Web | 68.38 ms                     | 0.2630 ms             |
 | Rust     | Hyper     | 5.684 ms                     | 0.2454 ms             |
 | Rust     | tiny-http | 1.722 ms                     | 0.2570 ms             |

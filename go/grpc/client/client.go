@@ -93,7 +93,7 @@ func main() {
 		fmt.Println("Connection (startup time):", time.Now().Sub(start).Seconds()*1000.0, "ms")
 
 		client := rpc.NewBenchmarkServiceClient(connection)
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 
 		runSimpleBenchmark(ctx, client)
 

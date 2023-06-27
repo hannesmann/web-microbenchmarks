@@ -1,12 +1,15 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"syscall"
 	"time"
+
+	rpc "go-grpc-common"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -16,11 +19,19 @@ const grpcAddr = "127.0.0.1"
 const grpcPort = "9500"
 const requests = 10000
 
-func sendRequest(connection *grpc.ClientConn) error {
+func sendRequest(ctx context.Context, client rpc.BenchmarkServiceClient) error {
+	response, err := client.Benchmark(ctx, &rpc.Request{Data: "r"})
+
+	if err != nil {
+		return err
+	}
+
+	response.GetData()
+
 	return nil
 }
 
-func runSimpleBenchmark(connection *grpc.ClientConn) error {
+func runSimpleBenchmark(ctx context.Context, client rpc.BenchmarkServiceClient) error {
 	return nil
 }
 
@@ -44,9 +55,13 @@ func main() {
 			panic(err)
 		}
 
+		client := rpc.NewBenchmarkServiceClient(connection)
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+
+		defer cancel()
 		defer connection.Close()
 
-		err = sendRequest(connection)
+		err = sendRequest(ctx, client)
 		start := time.Now()
 
 		// Keep retrying until server is up
@@ -55,12 +70,12 @@ func main() {
 				panic(err)
 			}
 
-			err = sendRequest(connection)
+			err = sendRequest(ctx, client)
 		}
 
 		fmt.Println("First request (startup time):", time.Now().Sub(start).Seconds()*1000.0, "ms")
 
-		runSimpleBenchmark(connection)
+		runSimpleBenchmark(ctx, client)
 
 		syscall.Kill(cmd.Process.Pid, syscall.SIGINT)
 		cmd.Wait()

@@ -12,7 +12,7 @@ import (
 )
 
 const httpAddr = "127.0.0.1"
-const httpPort = "9000"
+const httpPort = 9000
 const requests = 10000
 
 func sendRequest(addr string) error {
@@ -83,15 +83,17 @@ func main() {
 			panic(err)
 		}
 
+		defer syscall.Kill(cmd.Process.Pid, syscall.SIGINT)
+
 		useHttpmon := os.Getenv("USEHTTPMON") == "1"
-		address := fmt.Sprintf("http://%s:%s", httpAddr, httpPort)
+		address := fmt.Sprintf("http://%s:%d", httpAddr, httpPort)
 
 		err = sendRequest(address)
 		start := time.Now()
 
 		// Keep retrying until server is up
-		for errors.Is(err, syscall.ECONNREFUSED) {
-			if time.Now().Sub(start).Seconds() > 1 {
+		for err != nil {
+			if !errors.Is(err, syscall.ECONNREFUSED) || time.Now().Sub(start).Seconds() > 1 {
 				panic(err)
 			}
 
@@ -105,9 +107,6 @@ func main() {
 		} else {
 			runSimpleBenchmark(address)
 		}
-
-		syscall.Kill(cmd.Process.Pid, syscall.SIGINT)
-		cmd.Wait()
 	} else {
 		fmt.Println("Expected one argument")
 	}

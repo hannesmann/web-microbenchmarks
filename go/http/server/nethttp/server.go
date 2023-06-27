@@ -6,7 +6,7 @@ import (
 )
 
 const httpAddr = "127.0.0.1"
-const httpPort = "9000"
+const httpPort = 9000
 
 func main() {
 	fmt.Println("Go net/http server started")
@@ -16,7 +16,7 @@ func main() {
 		fmt.Fprint(writer, "r")
 	})
 
-	err := http.ListenAndServe(fmt.Sprintf("%s:%s", httpAddr, httpPort), nil)
+	err := http.ListenAndServe(fmt.Sprintf("%s:%d", httpAddr, httpPort), nil)
 
 	if err != nil {
 		panic(err)

@@ -7,7 +7,7 @@ import (
 )
 
 const httpAddr = "127.0.0.1"
-const httpPort = "9000"
+const httpPort = 9000
 
 func fastHTTPHandler(ctx *fasthttp.RequestCtx) {
 	if string(ctx.Path()) == "/" {
@@ -21,7 +21,7 @@ func main() {
 	fmt.Println("Go fasthttp server started")
 	defer fmt.Println("Go fasthttp server stopped")
 
-	err := fasthttp.ListenAndServe(fmt.Sprintf("%s:%s", httpAddr, httpPort), fastHTTPHandler)
+	err := fasthttp.ListenAndServe(fmt.Sprintf("%s:%d", httpAddr, httpPort), fastHTTPHandler)
 
 	if err != nil {
 		panic(err)

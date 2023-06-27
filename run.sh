@@ -15,6 +15,7 @@ function starthttp {
 		"all")
 			for i in $all_http; do echo "$i" && echo "" && starthttp $i $2 2>&1 | grep -E 'First request|Average response' && echo ""; done
 			;;
+
 		"go-fasthttp")
 			(cd go/http/server/fasthttp && go mod download && go build -o go-fasthttp-server)
 			mv -f go/http/server/fasthttp/go-fasthttp-server bin/
@@ -61,6 +62,26 @@ function starthttp {
 	esac
 }
 
+all_grpc="go-grpc rust-tonic"
+
+function startgrpc {
+	case $1 in 
+		"all")
+			for i in $all_grpc; do echo "$i" && echo "" && startgrpc $i $2 2>&1 | grep -E 'First request|Average response' && echo ""; done
+			;;
+
+		"go-grpc")
+			(cd go/grpc/server && go mod download && go build -o go-grpc-server)
+			mv -f go/grpc/server/go-grpc-server bin/
+			./bin/go-grpc-client ./bin/go-grpc-server
+			;;
+
+		*)
+			echo "Unknown server type $1"
+			;;
+	esac
+}
+
 case $benchtype in 
 	"http")
 		echo "Compiling client..."
@@ -89,7 +110,9 @@ case $benchtype in
 		(cd go/grpc/client && go mod download && go build -o go-grpc-client)
 		mv -f go/grpc/client/go-grpc-client bin/
 
-		read -p "Select gRPC server (go-grpc rust-tonic): " grpcserver
+		read -p "Select gRPC server (all $all_grpc): " grpcserver
+
+		startgrpc $grpcserver
 		;;
 
 	*)

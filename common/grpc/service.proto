@@ -1,6 +1,7 @@
 syntax = "proto3";
-
 option go_package = "./go/grpc/common";
+
+package benchmark;
 
 service BenchmarkService {
     rpc Benchmark (Request) returns (Response) {}

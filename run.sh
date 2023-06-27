@@ -76,6 +76,12 @@ function startgrpc {
 			./bin/go-grpc-client ./bin/go-grpc-server
 			;;
 
+		"rust-tonic")
+			(cd rust/grpc/server && cargo build --release)
+			mv -f rust/grpc/server/target/release/rust-grpc-server bin/
+			./bin/go-grpc-client ./bin/rust-grpc-server
+			;;
+
 		*)
 			echo "Unknown server type $1"
 			;;

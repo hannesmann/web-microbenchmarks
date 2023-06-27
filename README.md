@@ -13,7 +13,7 @@ All tests were done on 2x Intel Xeon E5-2685 at 2.1 GHz.
 
 ### HTTP simple benchmark
 
-The simple benchmark sends 10000 requests sequentially on a single thread. The server responds to every request with a single character "r".
+The simple HTTP benchmark sends 10000 requests sequentially on a single thread. The server responds to every request with a single character "r".
 
 | Language | Framework | Startup time (first request) | Average response time |
 | -------- | --------- | ---------------------------- | --------------------- |
@@ -40,3 +40,12 @@ The HTTPmon benchmark uses [cloud-control/httpmon](https://github.com/cloud-cont
 | Rust     | Hyper     | 1 ms            | 56 ms           | 1 ms                  | 1 ms                  | 5             |
 | Rust     | tiny-http | 5 ms            | 20077 ms        | 1 ms                  | 6 ms                  | 8             |
 | Rust     | Warp      | 1 ms            | 38 ms           | 1 ms                  | 1 ms                  | 4             |
+
+### gRPC simple benchmark
+
+The simple gRPC benchmark works the same way as the simple HTTP benchmark. 10000 requests are sent sequentially, with a request of a single byte and a response of a single byte.
+
+| Language | Framework | Startup time (first request) | Average response time |
+| -------- | --------- | ---------------------------- | --------------------- |
+| Go       | gRPC-Go   | 7.782 ms                     | 0.4264 ms             |
+| Rust     | Tonic     | 6.019 ms                     | 0.3675 ms             |

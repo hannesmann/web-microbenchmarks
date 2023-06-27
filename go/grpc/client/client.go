@@ -20,7 +20,7 @@ const grpcPort = 9500
 const requests = 10000
 
 func sendRequest(ctx context.Context, client rpc.BenchmarkServiceClient) error {
-	response, err := client.Benchmark(ctx, &rpc.Request{Data: "r"})
+	response, err := client.Benchmark(ctx, &rpc.Request{Data: "r"}, grpc.WaitForReady(true))
 
 	if err != nil {
 		return err

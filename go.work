@@ -1,5 +1,6 @@
 use (
 	./go/http/client
+	./go/http/server/echo
 	./go/http/server/fasthttp
 	./go/http/server/nethttp
 	./go/grpc/common

@@ -2,6 +2,7 @@
 
 export GODEBUG=http2client=0  # disable HTTP/2 client support
 export GODEBUG=$GODEBUG,http2server=0  # disable HTTP/2 server support
+export GOMAXPROCS=4 # ensure consistent number of worker threads
 export PYTHONDONTWRITEBYTECODE=1 # stop emitting pycache directories
 
 all_http="go-echo go-fasthttp go-gin go-nethttp python-gunicorn rust-actix rust-hyper rust-tinyhttp rust-warp"

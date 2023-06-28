@@ -19,7 +19,7 @@ impl BenchmarkService for TestService {
 const GRPC_ADDRESS: &str = "127.0.0.1";
 const GRPC_PORT: u16 = 9500;
 
-#[tokio::main]
+#[tokio::main(flavor = "multi_thread", worker_threads = 4)]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
 	let addr = format!("{}:{}", GRPC_ADDRESS, GRPC_PORT).parse()?;
 	let svc = TestService::default();

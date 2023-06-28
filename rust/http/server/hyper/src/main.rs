@@ -16,7 +16,7 @@ async fn respond(_req: Request<Body>) -> Result<Response<Body>, Infallible> {
 	Ok(Response::new("r".into()))
 }
 
-#[tokio::main]
+#[tokio::main(flavor = "multi_thread", worker_threads = 4)]
 async fn main() {
 	println!("Rust Hyper server started");
 

@@ -2,6 +2,7 @@
 
 export GODEBUG=http2client=0  # disable HTTP/2 client support
 export GODEBUG=$GODEBUG,http2server=0  # disable HTTP/2 server support
+export PYTHONDONTWRITEBYTECODE=1 # stop emitting pycache directories
 
 all_http="go-echo go-fasthttp go-gin go-nethttp python-gunicorn rust-actix rust-hyper rust-tinyhttp rust-warp"
 
@@ -41,7 +42,7 @@ function starthttp {
 			;;
 
 		"python-gunicorn")
-			(cd ./python/http/server/gunicorn && "$http_client" ./run.sh)
+			(cd ./python/http/server/gunicorn && "$http_client" ./http-python.sh)
 			;;
 
 		"rust-actix")
@@ -74,7 +75,7 @@ function starthttp {
 	esac
 }
 
-all_grpc="go-grpc rust-tonic"
+all_grpc="go-grpc python-grpc rust-tonic"
 
 function startgrpc {
 	case $1 in 
@@ -86,6 +87,11 @@ function startgrpc {
 			(cd go/grpc/server && go mod download && go build -o go-grpc-server)
 			mv -f go/grpc/server/go-grpc-server bin/
 			./bin/go-grpc-client ./bin/go-grpc-server
+			;;
+
+		"python-grpc")
+			client="$(pwd)/bin/go-grpc-client"
+			(cd ./python/grpc/server && "$client" ./grpc-python.sh)
 			;;
 
 		"rust-tonic")

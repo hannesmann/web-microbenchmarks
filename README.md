@@ -9,7 +9,10 @@ Tested with:
 
 ## Results
 
-All tests were done on 2x Intel Xeon E5-2685 at 2.1 GHz.
+* Tests done on 2x Intel Xeon E5-2685 at 2.1 GHz: [xeon.md](results/xeon.md)
+* Tests done on AMD Ryzen 7 5800X at 4.8 GHz: [ryzen.md](results/ryzen.md)
+
+## Old results (will be removed)
 
 ### HTTP simple benchmark
 

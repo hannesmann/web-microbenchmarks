@@ -3,7 +3,7 @@
 export GODEBUG=http2client=0  # disable HTTP/2 client support
 export GODEBUG=$GODEBUG,http2server=0  # disable HTTP/2 server support
 
-all_http="go-echo go-nethttp go-fasthttp python-gunicorn rust-actix rust-hyper rust-tinyhttp rust-warp"
+all_http="go-echo go-fasthttp go-gin go-nethttp python-gunicorn rust-actix rust-hyper rust-tinyhttp rust-warp"
 
 read -p "Select 'http' or 'grpc': " benchtype
 
@@ -26,6 +26,12 @@ function starthttp {
 			(cd go/http/server/fasthttp && go mod download && go build -o go-fasthttp-server)
 			mv -f go/http/server/fasthttp/go-fasthttp-server bin/
 			"$http_client" ./bin/go-fasthttp-server
+			;;
+
+		"go-gin")
+			(cd go/http/server/gin && go mod download && go build -o go-gin-server)
+			mv -f go/http/server/gin/go-gin-server bin/
+			"$http_client" ./bin/go-gin-server
 			;;
 
 		"go-nethttp")

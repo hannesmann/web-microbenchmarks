@@ -18,8 +18,9 @@ The simple HTTP benchmark sends 10000 requests sequentially on a single thread. 
 | Language | Framework | Startup time (first request) | Average response time |
 | -------- | --------- | ---------------------------- | --------------------- |
 | Go       | Echo      | 5.382 ms                     | 0.3001 ms             |
-| Go       | net/http  | 4.984 ms                     | 0.3022 ms             |
 | Go       | fasthttp  | 5.505 ms                     | 0.2496 ms             |
+| Go       | Gin       | 21.04 ms                     | 0.3026 ms             |
+| Go       | net/http  | 4.984 ms                     | 0.3022 ms             |
 | Python   | Gunicorn  | 485.8 ms                     | 1.401 ms              |
 | Rust     | Actix Web | 68.38 ms                     | 0.2630 ms             |
 | Rust     | Hyper     | 5.684 ms                     | 0.2454 ms             |
@@ -35,8 +36,9 @@ The HTTPmon benchmark uses [cloud-control/httpmon](https://github.com/cloud-cont
 | Language | Framework | Average latency | Maximum latency | 95-percentile latency | 99-percentile latency | Late requests |
 | -------- | --------- | --------------- | --------------- | --------------------- | --------------------- | ------------- |
 | Go       | Echo      | 1 ms            | 40 ms           | 1 ms                  | 1 ms                  | 9             |
-| Go       | net/http  | 1 ms            | 65 ms           | 1 ms                  | 2 ms                  | 11            |
 | Go       | fasthttp  | 1 ms            | 42 ms           | 1 ms                  | 3 ms                  | 8             |
+| Go       | Gin       | 1 ms            | 39 ms           | 1 ms                  | 1 ms                  | 9             |
+| Go       | net/http  | 1 ms            | 65 ms           | 1 ms                  | 2 ms                  | 11            |
 | Python   | Gunicorn  | 2 ms            | 41 ms           | 2 ms                  | 3 ms                  | 19            |
 | Rust     | Actix Web | 1 ms            | 56 ms           | 1 ms                  | 1 ms                  | 3             |
 | Rust     | Hyper     | 1 ms            | 56 ms           | 1 ms                  | 1 ms                  | 5             |

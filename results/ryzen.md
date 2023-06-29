@@ -22,17 +22,17 @@ The HTTPmon benchmark uses [cloud-control/httpmon](https://github.com/cloud-cont
 
 `httpmon --url $url --open --concurrency 640 --thinktime 1 --count 10000 --terminate-after-count`
 
-| Language | Framework | Average latency | Maximum latency | 95-percentile latency | 99-percentile latency | Late requests |
-| -------- | --------- | --------------- | --------------- | --------------------- | --------------------- | ------------- |
-| Go       | Echo      | 0 ms            | 13 ms           | 0 ms                  | 0 ms                  | 1             |
-| Go       | fasthttp  | 0 ms            | 10 ms           | 0 ms                  | 0 ms                  | 1             |
-| Go       | Gin       | 0 ms            | 11 ms           | 0 ms                  | 0 ms                  | 0             |
-| Go       | net/http  | 0 ms            | 21 ms           | 0 ms                  | 0 ms                  | 1             |
-| Python   | Gunicorn  | 0 ms            | 11 ms           | 0 ms                  | 0 ms                  | 2             |
-| Rust     | Actix Web | 0 ms            | 18 ms           | 0 ms                  | 0 ms                  | 2             |
-| Rust     | Hyper     | 0 ms            | 19 ms           | 0 ms                  | 0 ms                  | 3             |
-| Rust     | tiny-http | 0 ms            | 12 ms           | 0 ms                  | 0 ms                  | 3             |
-| Rust     | Warp      | 0 ms            | 19 ms           | 0 ms                  | 0 ms                  | 2             |
+| Language | Framework | Average latency | Maximum latency | 95-percentile latency | 99-percentile latency | Late requests (`accOpenQueuing`) |
+| -------- | --------- | --------------- | --------------- | --------------------- | --------------------- | -------------------------------- |
+| Go       | Echo      | 0 ms            | 13 ms           | 0 ms                  | 0 ms                  | 1                                |
+| Go       | fasthttp  | 0 ms            | 10 ms           | 0 ms                  | 0 ms                  | 1                                |
+| Go       | Gin       | 0 ms            | 11 ms           | 0 ms                  | 0 ms                  | 0                                |
+| Go       | net/http  | 0 ms            | 21 ms           | 0 ms                  | 0 ms                  | 1                                |
+| Python   | Gunicorn  | 0 ms            | 11 ms           | 0 ms                  | 0 ms                  | 2                                |
+| Rust     | Actix Web | 0 ms            | 18 ms           | 0 ms                  | 0 ms                  | 2                                |
+| Rust     | Hyper     | 0 ms            | 19 ms           | 0 ms                  | 0 ms                  | 3                                |
+| Rust     | tiny-http | 0 ms            | 12 ms           | 0 ms                  | 0 ms                  | 3                                |
+| Rust     | Warp      | 0 ms            | 19 ms           | 0 ms                  | 0 ms                  | 2                                |
 
 ### gRPC simple benchmark
 

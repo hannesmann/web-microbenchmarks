@@ -6,15 +6,15 @@ The simple HTTP benchmark sends 10000 requests sequentially on a single thread. 
 
 | Language | Framework | Startup time (first request) | Average response time |
 | -------- | --------- | ---------------------------- | --------------------- |
-| Go       | Echo      | 4.800 ms                     | 0.2779 ms             |
-| Go       | fasthttp  | 3.654 ms                     | 0.2248 ms             |
-| Go       | Gin       | 15.90 ms                     | 0.2716 ms             |
-| Go       | net/http  | 4.215 ms                     | 0.2719 ms             |
-| Python   | Gunicorn  | 455.0 ms                     | 1.472 ms              |
-| Rust     | Actix Web | - ms                         | - ms                  |
-| Rust     | Hyper     | - ms                         | - ms                  |
-| Rust     | tiny-http | - ms                         | - ms                  |
-| Rust     | Warp      | - ms                         | - ms                  |
+| Go       | Echo      | 4.495 ms                     | 0.2770 ms             |
+| Go       | fasthttp  | 4.398 ms                     | 0.2415 ms             |
+| Go       | Gin       | 16.02 ms                     | 0.2784 ms             |
+| Go       | net/http  | 4.693 ms                     | 0.2676 ms             |
+| Python   | Gunicorn  | 452.5 ms                     | 1.331 ms              |
+| Rust     | Actix Web | 45.65 ms                     | 0.2349 ms             |
+| Rust     | Hyper     | 2.150 ms                     | 0.2071 ms             |
+| Rust     | tiny-http | 1.444 ms                     | 0.2253 ms             |
+| Rust     | Warp      | 2.766 ms                     | 0.2155 ms             |
 
 ### HTTPmon benchmark
 
@@ -22,17 +22,18 @@ The HTTPmon benchmark uses [cloud-control/httpmon](https://github.com/cloud-cont
 
 `httpmon --url $url --open --concurrency 640 --thinktime 1 --count 10000 --terminate-after-count`
 
-| Language | Framework | Average latency | Maximum latency | 95-percentile latency | 99-percentile latency | Late requests |
-| -------- | --------- | --------------- | --------------- | --------------------- | --------------------- | ------------- |
-| Go       | Echo      | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Go       | fasthttp  | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Go       | Gin       | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Go       | net/http  | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Python   | Gunicorn  | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Rust     | Actix Web | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Rust     | Hyper     | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Rust     | tiny-http | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Rust     | Warp      | - ms            | - ms           | - ms                   | - ms                  | -             |
+| Language | Framework | Average latency | Maximum latency | 95-percentile latency | 99-percentile latency | Late requests (`accOpenQueuing`) |
+| -------- | --------- | --------------- | --------------- | --------------------- | --------------------- | -------------------------------- |
+| Go       | Echo      | 1 ms            | 32 ms           | 1 ms                  | 1 ms                  | 4                                |
+| Go       | fasthttp  | 1 ms            | 31 ms           | 1 ms                  | 1 ms                  | 3                                |
+| Go       | Gin       | 1 ms            | 72 ms           | 1 ms                  | 15 ms                 | 5                                |
+| Go       | net/http  | 1 ms            | 40 ms           | 1 ms                  | 1 ms                  | 4                                |
+| Python   | Gunicorn  | 2 ms            | 31 ms           | 2 ms                  | 4 ms                  | 17                               |
+| Rust     | Actix Web | 1 ms            | 63 ms           | 1 ms                  | 5 ms                  | 6                                |
+| Rust     | Hyper     | 1 ms            | 27 ms           | 1 ms                  | 1 ms                  | 4                                |
+| Rust     | Warp      | 1 ms            | 44 ms           | 1 ms                  | 1 ms                  | 5                                |
+
+Rust tiny-http was not included because it finished with 9009 errors.
 
 ### gRPC simple benchmark
 
@@ -40,6 +41,6 @@ The simple gRPC benchmark works the same way as the simple HTTP benchmark. 10000
 
 | Language | Framework         | Startup time (first request) | Average response time |
 | -------- | ----------------- | ---------------------------- | --------------------- |
-| Go       | gRPC-Go           | - ms                         | - ms                  |
-| Python   | google.protobuf   | - ms                         | - ms                  |
-| Rust     | Tonic             | - ms                         | - ms                  |
+| Go       | gRPC-Go           | 6.223 ms                     | 0.3884 ms             |
+| Python   | google.protobuf   | 684.0 ms                     | 0.7162 ms             |
+| Rust     | Tonic             | 3.631 ms                     | 0.3858 ms             |

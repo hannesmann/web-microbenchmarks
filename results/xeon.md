@@ -20,7 +20,7 @@ The simple HTTP benchmark sends 10000 requests sequentially on a single thread. 
 
 The HTTPmon benchmark uses [cloud-control/httpmon](https://github.com/cloud-control/httpmon) to send 10000 requests, with up to 1000 concurrently at the same time, to the server.
 
-`httpmon --url $url --open --concurrency 1000 --thinktime 1 --count 10000 --terminate-after-count`
+`httpmon --url $url --open --concurrency 640 --thinktime 1 --count 10000 --terminate-after-count`
 
 | Language | Framework | Average latency | Maximum latency | 95-percentile latency | 99-percentile latency | Late requests |
 | -------- | --------- | --------------- | --------------- | --------------------- | --------------------- | ------------- |

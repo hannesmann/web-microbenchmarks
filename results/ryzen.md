@@ -20,19 +20,19 @@ The simple HTTP benchmark sends 10000 requests sequentially on a single thread. 
 
 The HTTPmon benchmark uses [cloud-control/httpmon](https://github.com/cloud-control/httpmon) to send 10000 requests, with up to 1000 concurrently at the same time, to the server.
 
-`httpmon --url $url --open --concurrency 1000 --thinktime 1 --count 10000 --terminate-after-count`
+`httpmon --url $url --open --concurrency 640 --thinktime 1 --count 10000 --terminate-after-count`
 
 | Language | Framework | Average latency | Maximum latency | 95-percentile latency | 99-percentile latency | Late requests |
 | -------- | --------- | --------------- | --------------- | --------------------- | --------------------- | ------------- |
-| Go       | Echo      | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Go       | fasthttp  | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Go       | Gin       | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Go       | net/http  | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Python   | Gunicorn  | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Rust     | Actix Web | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Rust     | Hyper     | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Rust     | tiny-http | - ms            | - ms           | - ms                   | - ms                  | -             |
-| Rust     | Warp      | - ms            | - ms           | - ms                   | - ms                  | -             |
+| Go       | Echo      | 0 ms            | 13 ms           | 0 ms                  | 0 ms                  | 1             |
+| Go       | fasthttp  | 0 ms            | 10 ms           | 0 ms                  | 0 ms                  | 1             |
+| Go       | Gin       | 0 ms            | 11 ms           | 0 ms                  | 0 ms                  | 0             |
+| Go       | net/http  | 0 ms            | 21 ms           | 0 ms                  | 0 ms                  | 1             |
+| Python   | Gunicorn  | 0 ms            | 11 ms           | 0 ms                  | 0 ms                  | 2             |
+| Rust     | Actix Web | 0 ms            | 18 ms           | 0 ms                  | 0 ms                  | 2             |
+| Rust     | Hyper     | 0 ms            | 19 ms           | 0 ms                  | 0 ms                  | 3             |
+| Rust     | tiny-http | 0 ms            | 12 ms           | 0 ms                  | 0 ms                  | 3             |
+| Rust     | Warp      | 0 ms            | 19 ms           | 0 ms                  | 0 ms                  | 2             |
 
 ### gRPC simple benchmark
 
@@ -40,6 +40,6 @@ The simple gRPC benchmark works the same way as the simple HTTP benchmark. 10000
 
 | Language | Framework         | Startup time (first request) | Average response time |
 | -------- | ----------------- | ---------------------------- | --------------------- |
-| Go       | gRPC-Go           | - ms                         | - ms                  |
-| Python   | google.protobuf   | - ms                         | - ms                  |
-| Rust     | Tonic             | - ms                         | - ms                  |
+| Go       | gRPC-Go           | 1.538 ms                     | 0.04473 ms            |
+| Python   | google.protobuf   | 52.22 ms                     | 0.08712 ms            |
+| Rust     | Tonic             | 0.8179 ms                    | 0.04009 ms            |

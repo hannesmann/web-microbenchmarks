@@ -15,7 +15,9 @@ function starthttp {
 
 	case $1 in 
 		"all")
-			for i in $all_http; do echo "$i" && echo "" && starthttp $i $2 2>&1 | grep -E 'First request|Average response' && echo ""; done
+			for i in $all_http; 
+				do echo -e "\n$i" && starthttp $i $2 2>&1 | grep -E 'First request|Average response' && sleep 5; 
+			done
 			;;
 
 		"go-echo")
@@ -81,7 +83,9 @@ all_grpc="go-grpc python-grpc rust-tonic"
 function startgrpc {
 	case $1 in 
 		"all")
-			for i in $all_grpc; do echo "$i" && echo "" && startgrpc $i $2 2>&1 | grep -E 'First request|Average response' && echo ""; done
+			for i in $all_grpc; 
+				do echo -e "\n$i" && startgrpc $i $2 2>&1 | grep -E 'First request|Connection' && sleep 5; 
+			done			
 			;;
 
 		"go-grpc")

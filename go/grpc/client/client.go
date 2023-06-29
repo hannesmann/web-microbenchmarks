@@ -53,20 +53,34 @@ func runSimpleBenchmark(ctx context.Context, client rpc.BenchmarkServiceClient) 
 	fmt.Println("Average response time:", secondsPerRequest*1000.0, "ms")
 }
 
+func waitForCmd(cmd *exec.Cmd) {
+	err := cmd.Process.Signal(os.Interrupt)
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = cmd.Wait()
+
+	// Go programs will return with an error "signal: interrupt" when terminated with SIGINT
+	if err != nil && !strings.Contains(err.Error(), "signal: interrupt") {
+		panic(err)
+	}
+}
+
 func main() {
 	if len(os.Args) > 1 {
 		fmt.Println("Server binary:", os.Args[1])
 
 		cmd := exec.Command(os.Args[1])
 		cmd.Stdout = os.Stdout
+		cmd.SysProcAttr = &syscall.SysProcAttr{Pdeathsig: syscall.SIGKILL}
 
 		err := cmd.Start()
 
 		if err != nil {
 			panic(err)
 		}
-
-		defer syscall.Kill(cmd.Process.Pid, syscall.SIGINT)
 
 		address := fmt.Sprintf("%s:%d", grpcAddr, grpcPort)
 
@@ -99,6 +113,8 @@ func main() {
 
 		cancel()
 		connection.Close()
+
+		waitForCmd(cmd)
 	} else {
 		fmt.Println("Expected one argument")
 	}
